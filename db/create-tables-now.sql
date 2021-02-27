@@ -11,6 +11,11 @@ CREATE TYPE "payment_option" AS ENUM (
   'banking'
 );
 
+CREATE TYPE "type_admin" AS ENUM {
+  'root',
+  'normal'
+}
+
 CREATE TABLE "User" (
   "id_user" varchar PRIMARY KEY,
   "user_name" varchar,
@@ -29,7 +34,8 @@ CREATE TABLE "Admin" (
   "password" varchar,
   "phone" varchar,
   "address" varchar,
-  "avatar_admin" varchar
+  "avatar_admin" varchar,
+  "type_admin" type_admin
 );
 
 CREATE TABLE "Order" (
