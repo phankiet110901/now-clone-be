@@ -9,13 +9,14 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-    }),
     ConfigModule.forRoot({
       envFilePath: './development.env',
     }),
     TypeOrmModule.forRoot(typeOrmConfig),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      renderPath: '/',
+    }),
     AdminModule,
     AuthModule,
   ],

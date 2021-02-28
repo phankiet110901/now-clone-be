@@ -6,6 +6,7 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { TypeAdmin } from './../enum/type-admin.enum';
 @Entity('Admin')
 export class Admin extends BaseEntity {
   @PrimaryColumn()
@@ -25,6 +26,13 @@ export class Admin extends BaseEntity {
 
   @Column({ nullable: true })
   avatar_admin: string;
+
+  @Column({
+    type: 'enum',
+    enum: TypeAdmin,
+    default: TypeAdmin.normal,
+  })
+  type_admin: string;
 
   @BeforeInsert()
   async hashPassword() {

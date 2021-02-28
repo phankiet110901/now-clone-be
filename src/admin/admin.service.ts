@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Admin } from './admin.entity';
 import { AdminRepository } from './admin.repository';
-import { CreateAdminDto } from './dto/create-admin.dto';
 
 @Injectable()
 export class AdminService {
@@ -11,11 +10,11 @@ export class AdminService {
     private adminRepo: AdminRepository,
   ) {}
 
-  getAllUser(): Promise<Admin[]> {
-    return this.adminRepo.getAllUser();
+  getAllAdmin(): Promise<Admin[]> {
+    return this.adminRepo.getAllAdmin();
   }
 
-  createUser(createAdminDto: CreateAdminDto): Promise<Admin> {
-    return this.adminRepo.createAdmin(createAdminDto);
+  getAdminPagination(limit: number, currentPage: number): Promise<Object> {
+    return this.adminRepo.getAdminPagination(limit, currentPage);
   }
 }

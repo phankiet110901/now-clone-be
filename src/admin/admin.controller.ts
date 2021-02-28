@@ -1,28 +1,25 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
-import { create } from 'domain';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { IsInt } from 'class-validator';
 import { Admin } from './admin.entity';
 import { AdminService } from './admin.service';
-import { CreateAdminDto } from './dto/create-admin.dto';
 
 @Controller('admin')
 export class AdminController {
   constructor(private adminService: AdminService) {}
 
-  @Get()
-  getAllUser(): Promise<Admin[]> {
-    return this.adminService.getAllUser();
+  @Get('get-all-admin')
+  getAllAdmin(): Promise<Admin[]> {
+    return this.adminService.getAllAdmin();
   }
 
-  @Post()
-  @UsePipes(ValidationPipe)
-  createAdmin(@Body() createAdminDto: CreateAdminDto): Promise<Admin> {
-    return this.adminService.createUser(createAdminDto);
+  @Get('get-all-driver')
+  getAllDriver() {}
+
+  @Get('get-admin-pagination/:limit/:currentPage')
+  getAdminPagination(
+    @Param('limit', ParseIntPipe) limit: number,
+    @Param('currentPage', ParseIntPipe) currentPage: number,
+  ) {
+    return this.adminService.getAdminPagination(limit, currentPage);
   }
 }

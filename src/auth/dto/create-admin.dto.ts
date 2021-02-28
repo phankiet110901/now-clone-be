@@ -1,0 +1,21 @@
+import { IsIn, IsNotEmpty, IsPhoneNumber } from 'class-validator';
+import { TypeAdmin } from '../../enum/type-admin.enum';
+
+export class CreateAdminDto {
+  @IsNotEmpty()
+  user_name: string;
+
+  @IsNotEmpty()
+  password: string;
+
+  @IsNotEmpty()
+  @IsPhoneNumber('VN')
+  phone: string;
+
+  @IsNotEmpty()
+  address: string;
+
+  @IsNotEmpty()
+  @IsIn([TypeAdmin.normal, TypeAdmin.root])
+  type_admin: string;
+}
