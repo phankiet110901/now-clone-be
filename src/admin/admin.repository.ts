@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { BadGatewayException, BadRequestException } from '@nestjs/common';
 import { LoginAdminDto } from 'src/auth/dto/login.dto';
 import * as bcrypt from 'bcrypt';
+import { HandleToken } from './../sharing/handle-token.module';
 
 @EntityRepository(Admin)
 export class AdminRepository extends Repository<Admin> {
@@ -70,7 +71,7 @@ export class AdminRepository extends Repository<Admin> {
     return newAdmin;
   }
 
-  async loginAdmin(loginAdminDto: LoginAdminDto) {
+  async loginAdmin(loginAdminDto: LoginAdminDto): Promise<Object> {
     const foundAdmin = await this.findOne({
       user_name: loginAdminDto.user_name,
     });
@@ -86,7 +87,15 @@ export class AdminRepository extends Repository<Admin> {
     if (!checkPass) {
       throw new BadRequestException(`Wrong password`);
     }
-    return this.handleReponse(foundAdmin);
+
+    const token: string = new HandleToken().sign({
+      idUser: foundAdmin.id_admin,
+    });
+
+    return {
+      ...this.handleReponse(foundAdmin),
+      accessToken: token,
+    };
   }
 
   async getAllUser() {}
