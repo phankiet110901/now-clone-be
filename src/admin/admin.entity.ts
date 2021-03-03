@@ -1,6 +1,7 @@
 import {
   BaseEntity,
   BeforeInsert,
+  BeforeUpdate,
   Column,
   Entity,
   PrimaryColumn,
@@ -37,5 +38,5 @@ export class Admin extends BaseEntity {
   @BeforeInsert()
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, +process.env.BCRYPT_SALT);
-  }
+  }  
 }

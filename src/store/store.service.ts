@@ -7,7 +7,7 @@ import { StoreRepository } from './store.repository';
 export class StoreService {
     constructor(
         @InjectRepository(StoreRepository)
-        private storeRepo: StoreRepository
+        private readonly storeRepo: StoreRepository
     ) {}
 
 
@@ -21,5 +21,9 @@ export class StoreService {
 
     changeStatus(idStore: string) {
         return this.storeRepo.changeStatus(idStore);
+    }
+
+    uploadAvatar(fileName: string, idStore: string): Promise<Store> {
+        return this.storeRepo.uploadAvatar(fileName, idStore);
     }
 }
