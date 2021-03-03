@@ -6,11 +6,15 @@ import { BadGatewayException, BadRequestException } from '@nestjs/common';
 import { LoginAdminDto } from 'src/auth/dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { HandleToken } from './../sharing/handle-token.module';
+import { UpdateAdminDto } from './dto/update-admin.dto';
+import * as fs from 'fs';
 
 @EntityRepository(Admin)
 export class AdminRepository extends Repository<Admin> {
   async getAllAdmin(): Promise<Admin[]> {
-    const allUser = await this.find({ where: { type_admin: 'normal' } });
+    const allUser: Admin[] = await this.find({
+      where: { type_admin: 'normal' },
+    });
 
     return allUser.map((admin) => {
       return this.handleReponse(admin);
@@ -46,7 +50,7 @@ export class AdminRepository extends Repository<Admin> {
   }
 
   async createAdmin(createAdminDto: CreateAdminDto): Promise<Admin> {
-    const foundAdmin = await this.findOne({
+    const foundAdmin: Admin = await this.findOne({
       user_name: createAdminDto.user_name,
     });
 
@@ -98,16 +102,65 @@ export class AdminRepository extends Repository<Admin> {
     };
   }
 
-  async getAllUser() {}
-
-  async getAllDriver() {}
-
   private handleReponse(admin: Admin): Admin {
-    if (admin.avatar_admin) {
-      admin.avatar_admin = `${process.env.DOMAIN}admin/${admin.avatar_admin}`;
-    }
+    admin.avatar_admin = `${process.env.DOMAIN}/admin/${admin.avatar_admin}`;
     delete admin.password;
     delete admin.type_admin;
     return admin;
+  }
+
+  async updateAdmin(
+    updateAdminDto: UpdateAdminDto,
+    idAdmin: string,
+  ): Promise<Admin> {
+    const foundAdmin: Admin = await this.findOne({
+      where: { id_admin: idAdmin },
+    });
+
+    if (!foundAdmin) {
+      throw new BadRequestException(`Can not found id ${idAdmin}`);
+    }
+    foundAdmin.password = await bcrypt.hash(
+      updateAdminDto.password,
+      +process.env.BCRYPT_SALT,
+    );
+    foundAdmin.address = updateAdminDto.address;
+    foundAdmin.phone = updateAdminDto.phone;
+
+    await foundAdmin.save();
+
+    return this.handleReponse(foundAdmin);
+  }
+
+  async deleteAdmin(idAdmin: string): Promise<Admin> {
+    const foundAdmin: Admin = await this.findOne({
+      where: { id_admin: idAdmin },
+    });
+
+    if (!foundAdmin) {
+      throw new BadRequestException(`Can not find admin id '${idAdmin}'`);
+    }
+
+    if (foundAdmin.avatar_admin) {
+      fs.unlinkSync(`public/admin/${foundAdmin.avatar_admin}`);
+    }
+    await this.delete(foundAdmin);
+    return this.handleReponse(foundAdmin);
+  }
+
+  async uploadAdminAvatar(fileName: string, idAdmin: string): Promise<Admin> {
+    const foundAdmin: Admin = await this.findOne({
+      where: { id_admin: idAdmin },
+    });
+
+    if (!foundAdmin) {
+      throw new BadRequestException(`Can not find admin id '${idAdmin}' `);
+    }
+
+    foundAdmin.avatar_admin = fileName;
+
+    await foundAdmin.save();
+
+    return this.handleReponse(foundAdmin);
   }
 }

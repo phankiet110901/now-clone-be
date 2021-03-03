@@ -12,6 +12,7 @@ export class StoreRepository extends Repository<Store> {
   }
 
   private handleReponse(store: Store): Store {
+    store.avatar_store = `${process.env.DOMAIN}/store/${store.avatar_store}`;
     delete store.password;
     return store;
   }
@@ -49,7 +50,7 @@ export class StoreRepository extends Repository<Store> {
   }
 
   async createStore(createStoreDto: CreateStoreDto): Promise<Store> {
-    const foundStore = await this.findOne({
+    const foundStore: Store = await this.findOne({
       where: { email: createStoreDto.email },
     });
 
@@ -70,7 +71,9 @@ export class StoreRepository extends Repository<Store> {
   }
 
   async changeStatus(idStore: string): Promise<Store> {
-    const foundStore = await this.findOne({ where: { id_store: idStore } });
+    const foundStore: Store = await this.findOne({
+      where: { id_store: idStore },
+    });
 
     if (!foundStore) {
       throw new BadRequestException(`Can not find id '${idStore}' `);
@@ -78,6 +81,23 @@ export class StoreRepository extends Repository<Store> {
 
     foundStore.status = !foundStore.status;
     await foundStore.save();
+    return this.handleReponse(foundStore);
+  }
+
+  async uploadAvatar(fileName: string, idStore: string): Promise<Store> {
+    const foundStore = await this.findOne({
+      where: { id_store: idStore },
+    });
+
+    if (!foundStore) {
+      throw new BadRequestException(`Can not find store id '${idStore}'`);
+    }
+
+    foundStore.avatar_store = fileName;
+
+    await foundStore.save();
+    console.log(foundStore);
+
     return this.handleReponse(foundStore);
   }
 }

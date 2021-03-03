@@ -12,9 +12,9 @@ import { LoginAdminDto } from './dto/login.dto';
 export class AuthService {
   constructor(
     @InjectRepository(AdminRepository)
-    private adminRepo: AdminRepository,
+    private readonly adminRepo: AdminRepository,
     @InjectRepository(StoreRepository)
-    private storeRepo: StoreRepository,
+    private readonly storeRepo: StoreRepository,
   ) {}
 
   createAdmin(createAdminDto: CreateAdminDto): Promise<Admin> {
