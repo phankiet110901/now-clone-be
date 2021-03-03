@@ -1,13 +1,17 @@
 import {
+  Body,
   Controller,
   Get,
   Param,
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   UploadedFile,
   UseGuards,
   UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AdminGuard } from 'src/guard/admin.guard';
@@ -15,6 +19,7 @@ import { UploadImg } from 'src/sharing/upload-img.module';
 import { Store } from './store.entity';
 import { StoreService } from './store.service';
 import { diskStorage } from 'multer';
+import { UpdateStoreDto } from './dto/update-store.dto';
 
 @Controller('store')
 export class StoreController {
@@ -54,5 +59,15 @@ export class StoreController {
     @Param('idStore') idStore: string,
   ): Promise<Store> {
     return this.storeService.uploadAvatar(file.filename, idStore);
+  }
+
+  @Put('update-store/:idStore')
+  @UseGuards(AdminGuard)
+  @UsePipes(ValidationPipe)
+  updateStore(
+    @Body() updateStoreDto: UpdateStoreDto,
+    @Param('idStore') idStore: string,
+  ): Promise<Store> {
+    return this.storeService.updateAdmin(updateStoreDto, idStore);
   }
 }

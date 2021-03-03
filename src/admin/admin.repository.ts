@@ -3,7 +3,7 @@ import { Admin } from './admin.entity';
 import { CreateAdminDto } from '../auth/dto/create-admin.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { BadGatewayException, BadRequestException } from '@nestjs/common';
-import { LoginAdminDto } from 'src/auth/dto/login.dto';
+import { LoginDto } from 'src/auth/dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { HandleToken } from './../sharing/handle-token.module';
 import { UpdateAdminDto } from './dto/update-admin.dto';
@@ -75,7 +75,7 @@ export class AdminRepository extends Repository<Admin> {
     return newAdmin;
   }
 
-  async loginAdmin(loginAdminDto: LoginAdminDto): Promise<Object> {
+  async loginAdmin(loginAdminDto: LoginDto): Promise<Object> {
     const foundAdmin = await this.findOne({
       user_name: loginAdminDto.user_name,
     });
@@ -145,6 +145,7 @@ export class AdminRepository extends Repository<Admin> {
       fs.unlinkSync(`public/admin/${foundAdmin.avatar_admin}`);
     }
     await this.delete(foundAdmin);
+
     return this.handleReponse(foundAdmin);
   }
 
@@ -157,10 +158,12 @@ export class AdminRepository extends Repository<Admin> {
       throw new BadRequestException(`Can not find admin id '${idAdmin}' `);
     }
 
+    if (foundAdmin.avatar_admin) {
+      fs.unlinkSync(`public/admin/${foundAdmin.avatar_admin}`);
+    }
+
     foundAdmin.avatar_admin = fileName;
-
     await foundAdmin.save();
-
     return this.handleReponse(foundAdmin);
   }
 }

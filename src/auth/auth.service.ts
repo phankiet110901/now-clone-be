@@ -6,7 +6,7 @@ import { StoreRepository } from 'src/store/store.repository';
 import { AdminRepository } from './../admin/admin.repository';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { CreateStoreDto } from './dto/create-store.dto';
-import { LoginAdminDto } from './dto/login.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -21,11 +21,15 @@ export class AuthService {
     return this.adminRepo.createAdmin(createAdminDto);
   }
 
-  loginAdmin(loginAdminDto: LoginAdminDto): Promise<Object> {
+  loginAdmin(loginAdminDto: LoginDto): Promise<Object> {
     return this.adminRepo.loginAdmin(loginAdminDto);
   }
 
   createStore(createStoreDto: CreateStoreDto): Promise<Store> {
     return this.storeRepo.createStore(createStoreDto);
+  }
+
+  loginStore(loginDto: LoginDto): Promise<Object> {
+    return this.storeRepo.loginStore(loginDto);
   }
 }
