@@ -6,7 +6,6 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Admin } from 'src/admin/admin.entity';
 import { AdminGuard } from 'src/guard/admin.guard';
 import { Store } from 'src/store/store.entity';
