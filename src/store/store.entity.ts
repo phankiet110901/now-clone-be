@@ -21,11 +21,13 @@ export class Store extends BaseEntity {
   @Column({ nullable: true })
   avatar_store: string;
 
-  @Column()
+  @Column({
+    default: false
+  })
   status: Boolean;
 
   @Column()
-  email: string;
+  username: string;
 
   @Column()
   password: string;

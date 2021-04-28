@@ -131,7 +131,7 @@ export class StoreRepository extends Repository<Store> {
 
   async loginStore(loginDto: LoginDto): Promise<Object> {
     const foundStore: Store = await this.findOne({
-      where: { email: loginDto.user_name },
+      where: { email: loginDto.username },
     });
 
     if (!foundStore) {

@@ -14,7 +14,7 @@ export class Admin extends BaseEntity {
   id_admin: string;
 
   @Column()
-  user_name: string;
+  username: string;
 
   @Column()
   password: string;
