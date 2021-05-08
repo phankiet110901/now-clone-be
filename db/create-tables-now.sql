@@ -18,7 +18,7 @@ CREATE TYPE "type_admin" AS ENUM {
 
 CREATE TABLE "User" (
   "id_user" varchar PRIMARY KEY,
-  "user_name" varchar,
+  "username" varchar,
   "password" varchar,
   "address" varchar,
   "phone" varchar,
@@ -30,7 +30,7 @@ CREATE TABLE "User" (
 
 CREATE TABLE "Admin" (
   "id_admin" varchar PRIMARY KEY,
-  "user_name" varchar,
+  "username" varchar,
   "password" varchar,
   "phone" varchar,
   "address" varchar,

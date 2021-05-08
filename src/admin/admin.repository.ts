@@ -51,12 +51,12 @@ export class AdminRepository extends Repository<Admin> {
 
   async createAdmin(createAdminDto: CreateAdminDto): Promise<Admin> {
     const foundAdmin: Admin = await this.findOne({
-      user_name: createAdminDto.user_name,
+      username: createAdminDto.username,
     });
 
     if (foundAdmin) {
       throw new BadRequestException(
-        `Username '${createAdminDto.user_name}' have already exits !!!`,
+        `Username '${createAdminDto.username}' have already exits !!!`,
       );
     }
 
@@ -77,7 +77,7 @@ export class AdminRepository extends Repository<Admin> {
 
   async loginAdmin(loginAdminDto: LoginDto): Promise<Object> {
     const foundAdmin = await this.findOne({
-      user_name: loginAdminDto.user_name,
+      username: loginAdminDto.username,
     });
 
     if (!foundAdmin) {

@@ -25,13 +25,13 @@ import { diskStorage } from 'multer';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  @Get('get-all-admin')
+  @Get()
   @UseGuards(AdminGuard)
   getAllAdmin(): Promise<Admin[]> {
     return this.adminService.getAllAdmin();
   }
 
-  @Get('get-all-driver')
+  @Get()
   @UseGuards(AdminGuard)
   getAllDriver() {}
 
