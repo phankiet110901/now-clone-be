@@ -131,7 +131,7 @@ export class StoreRepository extends Repository<Store> {
 
   async loginStore(loginDto: LoginDto): Promise<Object> {
     const foundStore: Store = await this.findOne({
-      where: { email: loginDto.user_name },
+      where: { email: loginDto.username },
     });
 
     if (!foundStore) {
@@ -155,5 +155,21 @@ export class StoreRepository extends Repository<Store> {
       ...this.handleReponse(foundStore),
       token,
     };
+  }
+
+  async deleteStore(idStore: string): Promise<Store> {
+    const foundStore: Store = await this.findOne(idStore);
+
+    if (!foundStore) {
+      throw new BadRequestException(`Can not found store id ${idStore}`);
+    }
+
+    try {
+      await foundStore.remove();
+    } catch {
+      throw new BadRequestException(`Can not delete store id ${idStore}`);
+    }
+
+    return this.handleReponse(foundStore);
   }
 }

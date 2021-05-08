@@ -3,7 +3,7 @@ import { TypeAdmin } from '../../enum/type-admin.enum';
 
 export class CreateAdminDto {
   @IsNotEmpty()
-  user_name: string;
+  username: string;
 
   @IsNotEmpty()
   password: string;
