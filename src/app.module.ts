@@ -7,6 +7,7 @@ import { typeOrmConfig } from './config/typeOrm.config';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import { StoreModule } from './store/store.module';
+import { FoodModule } from './food/food.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { StoreModule } from './store/store.module';
     AdminModule,
     AuthModule,
     StoreModule,
+    FoodModule,
   ],
   controllers: [],
   providers: [],

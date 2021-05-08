@@ -1,15 +1,14 @@
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateStoreDto {
   @IsNotEmpty()
-  name_store: string;
+  nameStore: string;
 
   @IsNotEmpty()
   address: string;
 
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
+  username: string;
 
   @IsNotEmpty()
   password: string;
