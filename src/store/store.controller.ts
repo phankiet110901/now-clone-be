@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -69,5 +70,11 @@ export class StoreController {
     @Param('idStore') idStore: string,
   ): Promise<Store> {
     return this.storeService.updateAdmin(updateStoreDto, idStore);
+  }
+
+  @Delete('delete-store/:idStore')
+  @UseGuards(AdminGuard)
+  deleteStore(@Param('idStore') idStore: string): Promise<Store> {
+    return this.storeService.deleteStore(idStore);
   }
 }

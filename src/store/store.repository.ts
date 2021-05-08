@@ -156,4 +156,20 @@ export class StoreRepository extends Repository<Store> {
       token,
     };
   }
+
+  async deleteStore(idStore: string): Promise<Store> {
+    const foundStore: Store = await this.findOne(idStore);
+
+    if (!foundStore) {
+      throw new BadRequestException(`Can not found store id ${idStore}`);
+    }
+
+    try {
+      await foundStore.remove();
+    } catch {
+      throw new BadRequestException(`Can not delete store id ${idStore}`);
+    }
+
+    return this.handleReponse(foundStore);
+  }
 }

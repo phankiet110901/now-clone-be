@@ -30,4 +30,8 @@ export class StoreService {
   updateAdmin(updateStoreDto: UpdateStoreDto, idStore: string): Promise<Store> {
     return this.storeRepo.updateStore(updateStoreDto, idStore);
   }
+
+  deleteStore(idStore: string): Promise<Store> {
+    return this.storeRepo.deleteStore(idStore);
+  }
 }
