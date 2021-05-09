@@ -3,10 +3,14 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UploadImg } from 'src/sharing/upload-img.module';
 import { CreateFoodDto } from './dto/create-food.dto';
 import { FoodService } from './food.service';
 import { iFoodResponse } from './interfaces/food.interface';
@@ -35,9 +39,18 @@ export class FoodController {
     return this.foodService.createNewFood(createFoodDto);
   }
 
-  @Post()
-  uploadImageForFood() {
-    return 'upload img for food';
+  @Post("upload-image/:idFood")
+  @UseInterceptors(
+    FileInterceptor("imgFood", {
+      fileFilter: UploadImg.fileFilters,
+      storage: {
+        destination: "./public/food",
+        filename: UploadImg.handleUpload
+      }
+    })
+  )
+  uploadImageForFood(@Param("idFood") idFood: string) {
+    return this.foodService.uploadImgForFood("", idFood);
   }
 
   @Put()

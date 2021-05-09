@@ -49,4 +49,16 @@ export class FoodRepository extends Repository<Food> {
       return this.handleReponse(food);
     });
   }
+
+  async uploadImgForFood(fileName: string, idFood: string) {
+    const foundFood: Food = await this.findOne(idFood, {
+      relations: ['store'],
+    });
+
+    if (!foundFood) {
+      throw new BadRequestException(`Can not find food id ${idFood}`);
+    }
+
+    return this.handleReponse(foundFood);
+  }
 }

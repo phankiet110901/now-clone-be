@@ -19,4 +19,8 @@ export class FoodService {
   getAllFoods(): Promise<iFoodResponse[]> {
     return this.foodRepo.getAllFoods();
   }
+
+  uploadImgForFood(fileName: string, idStore) {
+    return this.foodRepo.uploadImgForFood(fileName, idStore);
+  }
 }
