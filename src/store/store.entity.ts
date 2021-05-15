@@ -3,9 +3,11 @@ import {
   BeforeInsert,
   Column,
   Entity,
+  OneToMany,
   PrimaryColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Food } from 'src/food/food.entity';
 
 @Entity('Store')
 export class Store extends BaseEntity {
@@ -31,6 +33,9 @@ export class Store extends BaseEntity {
 
   @Column()
   password: string;
+
+  @OneToMany(type => Food, food => food.store)
+  foods: Food[]
 
   @BeforeInsert()
   async hashPassword() {

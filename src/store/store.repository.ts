@@ -60,16 +60,20 @@ export class StoreRepository extends Repository<Store> {
 
     if (foundStore) {
       throw new BadRequestException(
+<<<<<<< HEAD
+        `Username '${createStoreDto.username}' have already exist `,
+=======
         `username '${createStoreDto.username}' have already exist `,
+>>>>>>> ea4debb7d8511c22843f811bcddef5907f1d8852
       );
     }
     const newStore = new Store();
     newStore.id_store = uuidv4();
     newStore.status = true;
-    for (const key in createStoreDto) {
-      newStore[key] = createStoreDto[key];
-    }
-
+    newStore.name_store = createStoreDto.nameStore;
+    newStore.password = createStoreDto.password;
+    newStore.address = createStoreDto.address;
+    newStore.username = createStoreDto.username;
     await newStore.save();
     return this.handleReponse(newStore);
   }

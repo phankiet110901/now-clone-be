@@ -27,11 +27,13 @@ export class StoreController {
   constructor(private storeService: StoreService) {}
 
   @Get()
+  @UseGuards(AdminGuard)
   getAllStore(): Promise<Store[]> {
     return this.storeService.getAllStore();
   }
 
   @Get('get-store-pagination/:limit/:currentPage')
+  @UseGuards(AdminGuard)
   getStorePagination(
     @Param('limit', ParseIntPipe) limit: number,
     @Param('currentPage', ParseIntPipe) currentPage: number,
@@ -47,7 +49,7 @@ export class StoreController {
 
   @Post('upload-avatar/:idStore')
   @UseInterceptors(
-    FileInterceptor('avatar_store', {
+    FileInterceptor('avatarStore', {
       fileFilter: UploadImg.fileFilters,
       storage: diskStorage({
         destination: './public/store',
@@ -63,7 +65,6 @@ export class StoreController {
   }
 
   @Put('update-store/:idStore')
-  @UseGuards(AdminGuard)
   @UsePipes(ValidationPipe)
   updateStore(
     @Body() updateStoreDto: UpdateStoreDto,
