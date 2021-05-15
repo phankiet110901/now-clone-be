@@ -6,6 +6,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Admin } from 'src/admin/admin.entity';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { Store } from 'src/store/store.entity';
@@ -14,6 +15,7 @@ import { CreateAdminDto } from './dto/create-admin.dto';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { LoginDto } from './dto/login.dto';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

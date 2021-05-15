@@ -21,6 +21,9 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadImg } from 'src/sharing/upload-img.module';
 import { diskStorage } from 'multer';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('admin')
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}

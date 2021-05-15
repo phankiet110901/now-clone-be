@@ -21,7 +21,9 @@ import { Store } from './store.entity';
 import { StoreService } from './store.service';
 import { diskStorage } from 'multer';
 import { UpdateStoreDto } from './dto/update-store.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('store')
 @Controller('store')
 export class StoreController {
   constructor(private storeService: StoreService) {}

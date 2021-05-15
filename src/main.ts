@@ -8,10 +8,6 @@ async function bootstrap() {
     .setTitle('Now-clone')
     .setDescription('The now clone api description')
     .setVersion('1.0')
-    .addTag('admin')
-    .addTag('auth')
-    .addTag('user')
-    .addTag('store')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
