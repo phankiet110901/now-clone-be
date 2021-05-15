@@ -8,8 +8,7 @@ export class CreateStoreDto {
   address: string;
 
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
+  username: string;
 
   @IsNotEmpty()
   password: string;

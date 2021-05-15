@@ -15,8 +15,8 @@ import {
 } from '@nestjs/common';
 import { Admin } from './admin.entity';
 import { AdminService } from './admin.service';
-import { AdminGuard } from '../guard/admin.guard';
-import { RootAdminGuard } from 'src/guard/root-admin.guard';
+import { AdminGuard } from '../guards/admin.guard';
+import { RootAdminGuard } from 'src/guards/root-admin.guard';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadImg } from 'src/sharing/upload-img.module';
