@@ -46,7 +46,7 @@ export class AuthController {
     return this.authService.createStore(createStoreDto);
   }
 
-  @Post('check-token')
+  @Post('refresh-token')
   checkTokenIsExpired() {
 
   }
