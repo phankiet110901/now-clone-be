@@ -59,6 +59,9 @@ export class FoodRepository extends Repository<Food> {
       throw new BadRequestException(`Can not find food id ${idFood}`);
     }
 
+    foundFood.img = fileName;
+
+    await foundFood.save();
     return this.handleReponse(foundFood);
   }
 }
