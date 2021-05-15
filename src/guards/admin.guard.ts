@@ -13,7 +13,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class AdminGuard implements CanActivate {
   constructor(
     @InjectRepository(AdminRepository)
-    private readonly adminRepo: AdminRepository
+    private readonly adminRepo: AdminRepository,
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -26,7 +26,10 @@ export class AdminGuard implements CanActivate {
 
     try {
       idUser = jwt.verify(token, process.env.SECRET_KEY).payload.idUser;
-    } catch {
+    } catch (err) {
+      if (err instanceof jwt.TokenExpiredError) {
+        throw new ForbiddenException(`Token is Expired`);
+      }
       throw new ForbiddenException(`Token invalid`);
     }
 

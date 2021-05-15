@@ -60,7 +60,11 @@ export class StoreRepository extends Repository<Store> {
 
     if (foundStore) {
       throw new BadRequestException(
+<<<<<<< HEAD
         `Username '${createStoreDto.username}' have already exist `,
+=======
+        `username '${createStoreDto.username}' have already exist `,
+>>>>>>> ea4debb7d8511c22843f811bcddef5907f1d8852
       );
     }
     const newStore = new Store();
