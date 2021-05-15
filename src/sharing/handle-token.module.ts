@@ -8,7 +8,7 @@ export class HandleToken {
         payload,
       },
       process.env.SECRET_KEY,
-      { expiresIn: '5s' },
+      { expiresIn: '7d' },
     );
   }
   
