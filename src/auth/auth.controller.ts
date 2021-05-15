@@ -7,7 +7,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { Admin } from 'src/admin/admin.entity';
-import { AdminGuard } from 'src/guard/admin.guard';
+import { AdminGuard } from 'src/guards/admin.guard';
 import { Store } from 'src/store/store.entity';
 import { AuthService } from './auth.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
@@ -44,5 +44,10 @@ export class AuthController {
   @UsePipes(ValidationPipe)
   registerStore(@Body() createStoreDto: CreateStoreDto): Promise<Store> {
     return this.authService.createStore(createStoreDto);
+  }
+
+  @Post('check-token')
+  checkTokenIsExpired() {
+
   }
 }

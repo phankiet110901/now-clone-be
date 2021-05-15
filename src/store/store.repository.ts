@@ -55,12 +55,12 @@ export class StoreRepository extends Repository<Store> {
 
   async createStore(createStoreDto: CreateStoreDto): Promise<Store> {
     const foundStore: Store = await this.findOne({
-      where: { email: createStoreDto.email },
+      where: { username: createStoreDto.username },
     });
 
     if (foundStore) {
       throw new BadRequestException(
-        `Email '${createStoreDto.email}' have already exist `,
+        `username '${createStoreDto.username}' have already exist `,
       );
     }
     const newStore = new Store();
@@ -131,7 +131,7 @@ export class StoreRepository extends Repository<Store> {
 
   async loginStore(loginDto: LoginDto): Promise<Object> {
     const foundStore: Store = await this.findOne({
-      where: { email: loginDto.username },
+      where: { username: loginDto.username },
     });
 
     if (!foundStore) {

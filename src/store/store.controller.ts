@@ -14,7 +14,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { AdminGuard } from 'src/guard/admin.guard';
+import { AdminGuard } from 'src/guards/admin.guard';
 import { UploadImg } from 'src/sharing/upload-img.module';
 import { Store } from './store.entity';
 import { StoreService } from './store.service';
